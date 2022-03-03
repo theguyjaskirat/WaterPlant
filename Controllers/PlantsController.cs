@@ -38,12 +38,14 @@ namespace WaterPlant.Controllers
         public async Task<ActionResult<IEnumerable<Plant>>> GetPlants()
         {
             var list = await _context.Plants.ToListAsync();
-            foreach (var item in list)
-            {
-                var diffInSeconds = (DateTime.Now - item.lastWateredAt).TotalSeconds;
-                if (diffInSeconds < 30)
-                    item.isWaterAllowed = true;
-            }
+            //following code can be used if want to update status to watering, so that no other can give the water to the same plant at the same time.
+            //for testing it is being calculated in seconds and will work only if user makes any action (water any plant then broadcast will happen).
+            //foreach (var item in list)
+            //{
+            //    var diffInSeconds = (DateTime.Now - item.lastWateredAt).TotalSeconds;
+            //    if (diffInSeconds < 30)
+            //        item.isWaterAllowed = true;
+            //}
             return list;
         }
 
