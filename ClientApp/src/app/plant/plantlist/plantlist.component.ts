@@ -53,9 +53,12 @@ export class PlantlistComponent implements OnInit {
           }
 
           function allocateTimeUnits(timeDifference) {
+            
+            value.hoursToDday = Math.floor((timeDifference) / (milliSecondsInASecond * minutesInAnHour * SecondsInAMinute) % hoursInADay);
             value.secondsToDday = Math.floor((timeDifference) / (milliSecondsInASecond) % SecondsInAMinute);
             value.minutesToDday = Math.floor((timeDifference) / (milliSecondsInASecond * minutesInAnHour) % SecondsInAMinute);
-            if (value.minutesToDday > 359) {//change minutes value to 1 for testing for 1 minute.
+           
+            if (value.hoursToDday > 5) {//change hoursToDday value to 1 for testing for 1 hour. or use minutesToDday > 1 to test 1 minute water time. 
               value.status = "Y";
 
               if (value.canStopwatering == false)
@@ -108,11 +111,11 @@ export class PlantlistComponent implements OnInit {
     this._service.getPlantsList().subscribe(data => {
       this.plantList = data;
 
-       console.log(JSON.stringify(data));
+       //console.log(JSON.stringify(data));
     });
   }
   giveWater(item: any) {
-    
+    console.log("starts watering to plant "+ item.plantId);
     item.canStopwatering = true;
     item.isWaterAllowed = true;
     this.stoptimerinterval = setTimeout(() => {
@@ -122,19 +125,27 @@ export class PlantlistComponent implements OnInit {
   stopWater(item: any) {
     item.canStopwatering = false;
     item.isWaterAllowed = false;
-    //setinterval 10000 if click ta rok do else u[date]
+   
+    //setinterval 10000 stop
     clearTimeout(this.stoptimerinterval);
-    console.log("Watering stopped....");
+    console.log("Watering stopped...."+item.plantId);
+    item=null;
+    
   }
   givewaterAPI(item: any) {
    var cid=localStorage.getItem('connectionid');
-  // console.log('cid hega'+cid);
+   
+if(item.canStopwatering==false){
+
+  return;
+}
     this._service.waterthePlant(item.plantId, item,cid).subscribe(data => {
       //this.plantList = data;
        
       item.canStopwatering = false;
       item.isWaterAllowed = true;
       item.lastWateredAt= new Date();
+      console.log('ne witem'+cid +"plant id "+JSON.stringify(item));
       //need to call this if can water plants from multiple devices for more consistency and comment line 140-142 and uncomment ln 139
      // this.getPlantsList();
     });

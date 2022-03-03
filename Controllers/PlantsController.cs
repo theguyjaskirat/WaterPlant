@@ -80,13 +80,18 @@ namespace WaterPlant.Controllers
 
             try
             {
+               
+               
+                await _context.SaveChangesAsync();
                 if (!string.IsNullOrEmpty(traceValue))
                 {
                     await _hubContext.Clients.AllExcept(connectionId).SendAsync("BroadcastMessage");
                 }
-               
-                await _context.SaveChangesAsync();
-              // await _hubContext.Clients.All.SendAsync("BroadcastMessage");
+                else
+                {
+                    await _hubContext.Clients.All.SendAsync("BroadcastMessage");
+                }
+                // await _hubContext.Clients.All.SendAsync("BroadcastMessage");
             }
             catch (DbUpdateConcurrencyException)
             {
