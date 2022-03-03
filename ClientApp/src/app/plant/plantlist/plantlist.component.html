@@ -1,0 +1,49 @@
+<p>Status (Y) means need water and (N) means no need of water.</p> 
+<br/> 
+
+<div *ngIf="!plantList">
+    Fetching data,please wait....
+  </div>
+<table class="table " *ngIf="plantList">
+    <thead>
+      <tr>
+          <th>Plant ID</th>
+          <th>Plant Name</th>
+          <th>Need Water?</th>
+          <!-- <th>Last Watered</th> -->
+          <!-- <th>Action</th> -->
+            <th>TIme Last watered </th>
+            <th>Action(s)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- *ngFor='let obj of (array$ | async)'    *ngFor="let dataItem of plantList" -->
+      <tr  *ngFor="let obj of plantList;"
+        [ngClass]="{ 'alert-danger':obj.status === 'Y'}"  >
+        
+        <td>{{obj.plantId}}</td>
+        <td>{{obj.plantName}}</td>
+        <td>{{obj.status}}</td> 
+        <!-- <td>{{obj.lastWateredAt | date:'medium'}}</td> -->
+        <!-- <td>{{obj.isWaterAllowed}}</td> -->
+        <td>{{obj.minutesToDday}}Min {{obj.secondsToDday}}(S) ago</td>
+        <!-- <td>{{obj.canStopwatering}}</td> -->
+        
+        <td>
+          <button  [ngClass]="{
+            'btn btn-info':obj.isWaterAllowed,
+            'btn btn-success':!obj.isWaterAllowed
+            
+          }"   type="button" [disabled]="obj.isWaterAllowed"
+         
+          
+          (click)="giveWater(obj)">Give Water</button>
+             
+        </td>
+        
+        <td  >
+          <button *ngIf="obj.canStopwatering" (click)="stopWater(obj)" type="button" class= 'btn btn-danger' >Stop</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
