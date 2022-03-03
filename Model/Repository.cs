@@ -10,6 +10,8 @@ using WaterPlant.Interfaces;
 
 namespace WaterPlant.Model
 {
+
+    //not beind used but can be used if sqldepemdency approach is needed.
     public class data
     {
         public int plantid { get; set; }

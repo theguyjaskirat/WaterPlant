@@ -55,7 +55,7 @@ export class PlantlistComponent implements OnInit {
           function allocateTimeUnits(timeDifference) {
             value.secondsToDday = Math.floor((timeDifference) / (milliSecondsInASecond) % SecondsInAMinute);
             value.minutesToDday = Math.floor((timeDifference) / (milliSecondsInASecond * minutesInAnHour) % SecondsInAMinute);
-            if (value.minutesToDday > 1) {
+            if (value.minutesToDday > 359) {//change minutes value to 1 for testing for 1 minute.
               value.status = "Y";
 
               if (value.canStopwatering == false)
