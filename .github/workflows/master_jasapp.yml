@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'JasApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_41AEFD91C8EC4851BF8D7AB0CB982DC1 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_142F887A9EBA4EFFA3F5DF9742F73D7B }}
           package: .
