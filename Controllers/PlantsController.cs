@@ -73,7 +73,7 @@ namespace WaterPlant.Controllers
             }
              Request.Headers.TryGetValue("connectionid", out var traceValue);
             string connectionId = traceValue.ToString();
-            //if (plant.status == "s")//it will be used if we are updating stop status in the DB and update others.
+            //if (plant.status == "s")//it will be used if yes we are updating stop status in the DB and update others.
             //    plant.status = "Y";
             // else { 
             plant.lastWateredAt = DateTime.Now;
